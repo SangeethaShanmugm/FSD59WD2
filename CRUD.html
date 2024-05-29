@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    C - CREATE => INSERT/ADD => POST R - READ => GET U - UPDATE => PUT D -
+    DELETE => DELETE
+    <script>
+        let url = "https://659e6ba547ae28b0bd35caec.mockapi.io/products";
+
+        // fetch(url, { method: "GET" })
+        //     .then((res) => res.json())
+        //     .then((data) => console.log(data))
+
+        async function getProductData() {
+            let data = await fetch(url, { method: "GET" })
+            let res = await data.json()
+            console.log(res)
+        }
+
+        getProductData()
+
+        const id = 1
+
+        async function getProductById() {
+            let data = await fetch(`${url}/${id}`, { method: "GET" })
+            let res = await data.json()
+            console.log(res)
+        }
+        getProductById()
+
+
+        //create products
+
+        async function createProduct() {
+            let newProduct = {
+                name: "Macbook m3",
+                poster: "https://m.media-amazon.com/images/I/71d7rfSl0wL._AC_UY218_.jpg",
+                price: "₹2,00,000",
+                rating: 5,
+                summary: "Macbook m3"
+            }
+            //POST
+            // 1. method  - POST
+            // 2. headers - data is in JSON
+            // 3. body - pass data in body and it should be in JSON format
+            let data = await fetch(url,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(newProduct)
+
+                }
+            )
+            let res = await data.json()
+            console.table(res)
+
+        }
+
+        // createProduct()
+
+        //delete products
+
+
+        async function deleteProductById(id) {
+            let data = await fetch(`${url}/${id}`, { method: "DELETE" })
+            let res = await data.json()
+            console.table(res)
+        }
+        deleteProductById(12)
+
+        //update product
+
+        async function updateProductById(id) {
+            let updatedProduct = {
+                "name": "Macbook m3",
+                "poster": "https://m.media-amazon.com/images/I/71d7rfSl0wL._AC_UY218_.jpg",
+                "price": "₹3,00,000",
+                "rating": 4,
+                "summary": "Macbook m3 chip",
+            }
+            //POST
+            // 1. method  - PUT
+            // 2. headers - data is in JSON
+            // 3. body - pass data in body and it should be in JSON format
+            let data = await fetch(`${url}/${id}`,
+                {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(updatedProduct)
+
+                }
+            )
+
+            let res = await data.json()
+            console.table(res)
+        }
+        updateProductById(11)
+
+    </script>
+</body>
+
+</html>
